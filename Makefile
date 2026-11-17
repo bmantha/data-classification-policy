@@ -99,7 +99,8 @@ test-mocks: ## Check the local CDGC mock contract without network calls
 security: test-unit test-mocks advisory ## Check security regressions and all dependency advisories
 
 advisory: install-cargo-audit ## Audit the checked-in lockfile, including warnings
-	cargo audit --file Cargo.lock --deny warnings
+	# RUSTSEC-2026-0543: chrono (transitive) is unmaintained and has no fixed upgrade; revisit when one exists.
+	cargo audit --file Cargo.lock --deny warnings --ignore RUSTSEC-2026-0543
 
 FORMAT     ?=
 OUTPUT_PATH ?=
